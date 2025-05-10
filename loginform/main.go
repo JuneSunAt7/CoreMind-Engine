@@ -8,7 +8,7 @@ import (
     "os"
     "path/filepath"
 )
-
+// test admin:123456
 var users = map[string]string{
     "admin": "$2a$10$QVxrn3ub42ENaS8yze3kleMSCQg.3rqJ8c.jXCBzYqVU.PSU0gKha",
 }

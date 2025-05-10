@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Обновление текста кнопки при выборе файла
+    // upd txt
     $('#modelFile').on('change', function () {
       var fileName = $(this).val().split('\\').pop();
       if (fileName) {
@@ -9,15 +9,13 @@ $(document).ready(function () {
       }
     });
   
-    // Подстановка файла в форму загрузки модели
     $('form:eq(0)').on('submit', function (e) {
       if ($('#model')[0].files.length === 0) {
         e.preventDefault();
-        $('#model').click(); // эмулируем клик для выбора файла
+        $('#model').click(); // emu clc
       }
     });
-  
-    // То же самое для датасета
+
     $('form:eq(1)').on('submit', function (e) {
       if ($('#dataset')[0].files.length === 0) {
         e.preventDefault();
