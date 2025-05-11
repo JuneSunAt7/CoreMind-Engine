@@ -40,7 +40,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
             Path:     "/",
         })
 
-        http.Redirect(w, r, "../dashboard", http.StatusSeeOther)
+        http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
         return
     }
 

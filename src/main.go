@@ -4,11 +4,11 @@ import (
     "net/http"
     "coremind/db"
     "coremind/handlers"
+    "log"
 )
 func main() {
+
     db.InitDB()
-
-
     fs := http.FileServer(http.Dir("static"))
     http.Handle("/static/", http.StripPrefix("/static/", fs))
 
@@ -24,6 +24,9 @@ func main() {
     http.HandleFunc("/logout", handlers.LogoutHandler)
     http.HandleFunc("/register", handlers.RegisterHandler)
 
-    fmt.Println("Сервер запущен на http://localhost:8080")
-    http.ListenAndServe(":8080", nil)
+    fmt.Println("Запуск HTTPS сервера на https://localhost:8080")
+    err := http.ListenAndServeTLS(":8080", "cert.pem", "key.pem", nil)
+    if err != nil {
+        log.Fatalf("Ошибка запуска HTTPS сервера: %v", err)
+    }
 }

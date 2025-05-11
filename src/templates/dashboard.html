@@ -28,6 +28,14 @@
       <input type="file" id="dataset" name="dataset" required style="display: none;">
       <button type="button" onclick="document.getElementById('dataset').click()">Загрузить датасет</button>
     </form>
+    <form action="/upload/code" method="post" enctype="multipart/form-data">
+      <input type="file" id="code" name="code" required style="display: none;">
+      <button type="button" onclick="document.getElementById('code').click()">Загрузить Python-файл модели</button>
+    </form>
+    <form action="/upload/params" method="post" enctype="multipart/form-data">
+      <input type="file" id="params" name="params" required style="display: none;">
+      <button type="button" onclick="document.getElementById('code').click()">Параметры обучения</button>
+    </form>
   </div>
   <div class="top-bar-right">
     <a href="/logout"><button class="logout-btn">Выйти</button></a>

@@ -2,16 +2,28 @@ package handlers
 
 import (
     "net/http"
+    "fmt"
 )
 
 func DashboardHandler(w http.ResponseWriter, r *http.Request) {
     cookie, err := r.Cookie("session")
-    if err != nil || cookie.Value == "" {
-        http.Redirect(w, r, "/", http.StatusSeeOther)
+
+    // check cookie
+    if err != nil {
+        fmt.Println("Ошибка получения куки:", err)
+        http.Redirect(w, r, "/login", http.StatusSeeOther)
         return
     }
 
-    http.ServeFile(w, r, "../templates/dashboard.html")
+    if cookie.Value == "" {
+        fmt.Println("Кука пустая")
+        http.Redirect(w, r, "/login", http.StatusSeeOther)
+        return
+    }
+
+    fmt.Println("Пользователь вошёл как:", cookie.Value)
+
+    http.ServeFile(w, r, "../src/templates/dashboard.html")
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
