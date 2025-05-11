@@ -9,12 +9,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   
-  .top-bar-left h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 500;
-  }
-  
+
   .top-bar-center {
     display: flex;
     gap: 15px;
@@ -26,6 +21,7 @@
   
   .top-bar-center button {
     outline: none;
+    margin: 0 1.5%;
   background: #8042f452;
   width: 100%;
   border: 0;
@@ -38,6 +34,9 @@
   line-height: inherit;
   text-transform: uppercase;
   cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  min-height: auto;
   }
   
   .top-bar-center button:hover {
@@ -122,4 +121,5 @@
   }
   
   .model-card {
-    background: rgba(255, 255,
+    background: rgba(255, 255,255)
+  }

@@ -51,7 +51,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
         username := r.FormValue("username")
         password := r.FormValue("password")
 
-        // Проверка на пустые поля
         if username == "" || password == "" {
             http.Error(w, "Все поля обязательны", http.StatusBadRequest)
             return

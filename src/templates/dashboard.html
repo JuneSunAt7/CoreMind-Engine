@@ -4,41 +4,33 @@
   <meta charset="UTF-8">
   <title>Дашборд</title>
 
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto :100,300,400,500,700,900|Material+Icons'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto :400,500,700|Material+Icons'>
 
   <link rel="stylesheet" href="/static/style.css?v=2">
   <link rel="stylesheet" href="/static/dashboard.css">
 
   <script src="https://code.jquery.com/jquery-2.1.3.min.js "></script>
 
-  <script src="/js/dashboard.js"></script>
+  <script src="/js/dashboard.js" defer></script>
 </head>
 <body>
 
 <div class="top-bar">
-  <div class="top-bar-left">
 
-  </div>
   <div class="top-bar-center">
-    <form action="/upload/model" method="post" enctype="multipart/form-data">
-      <input type="file" id="model" name="model" required style="display: none;">
-      <button type="button" onclick="document.getElementById('model').click()">Загрузить модель</button>
-    </form>
-    <form action="/upload/dataset" method="post" enctype="multipart/form-data">
-      <input type="file" id="dataset" name="dataset" required style="display: none;">
-      <button type="button" onclick="document.getElementById('dataset').click()">Загрузить датасет</button>
-    </form>
-    <form action="/upload/code" method="post" enctype="multipart/form-data">
-      <input type="file" id="code" name="code" required style="display: none;">
-      <button type="button" onclick="document.getElementById('code').click()">Загрузить Python-файл модели</button>
-    </form>
-    <form action="/upload/params" method="post" enctype="multipart/form-data">
-      <input type="file" id="params" name="params" required style="display: none;">
-      <button type="button" onclick="document.getElementById('code').click()">Параметры обучения</button>
-    </form>
+    <button id="uploadModelBtn">Загрузить модель</button>
+    <input type="file" id="model" name="model" style="display: none;" />
+    <button id="uploadDatasetBtn">Загрузить датасет</button>
+    <input type="file" id="dataset" name="dataset" style="display: none;" />
+    
+    <button id="uploadCodeBtn">Загрузить Python-модель</button>
+    <input type="file" id="code" name="code" style="display: none;" />
+
+    <button id="uploadParamsBtn">Параметры обучения</button>
+    <input type="file" id="params" name="params" style="display: none;" />
   </div>
   <div class="top-bar-right">
-    <a href="/logout"><button class="logout-btn">Выйти</button></a>
+    <a href="/logout"><button class="logout-btn" type="button">Выйти</button></a>
   </div>
 </div>
 
@@ -48,11 +40,11 @@
     <h2>Текущие загрузки</h2>
     <div class="progress-container">
       <div class="progress-item">
-        <p>Модель "example_model.pt"</p>
+        <p id="currentFile">Модель: <strong>"example_model.pt"</strong></p>
         <div class="progress-bar">
-          <div class="progress-fill" style="width: 65%"></div>
+          <div class="progress-fill" id="globalProgressFill" style="width: 0%"></div>
         </div>
-        <small>65%</small>
+        <small id="progressPercent">0%</small>
       </div>
     </div>
   </section>
@@ -78,9 +70,7 @@
         <p>Дата загрузки: 2025-04-03</p>
       </div>
     </div>
-  </section>
-
-</div>
+  </div>
 
 </body>
 </html>

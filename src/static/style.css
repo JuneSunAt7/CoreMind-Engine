@@ -133,14 +133,14 @@ body {
 }
 .button-row {
   display: flex;
-  justify-content: space-between; /* Раздвигаем кнопки по краям */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-top: 20px;
 }
 
 .button-row button {
-  width: 38%; /* чтобы кнопки не сливались в одну линию */
+  width: 38%; 
   padding: 12px 20px;
   font-size: 16px;
   outline: none;
@@ -159,7 +159,7 @@ body {
   cursor: pointer;
 }
 .form-group button{
-  width: 38%; /* чтобы кнопки не сливались в одну линию */
+  width: 38%; 
   padding: 12px 20px;
   font-size: 16px;
   outline: none;
