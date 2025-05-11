@@ -131,7 +131,18 @@ body {
 .two .form-group input:focus {
   color: #FFFFFF;
 }
-.form-group button {
+.button-row {
+  display: flex;
+  justify-content: space-between; /* Раздвигаем кнопки по краям */
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.button-row button {
+  width: 38%; /* чтобы кнопки не сливались в одну линию */
+  padding: 12px 20px;
+  font-size: 16px;
   outline: none;
   background: #8042f452;
   width: 100%;
@@ -140,6 +151,26 @@ body {
   padding: 12px 20px;
   color: #FFFFFF;
   font-family: inherit;
+  margin: 0 1.5%;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.form-group button{
+  width: 38%; /* чтобы кнопки не сливались в одну линию */
+  padding: 12px 20px;
+  font-size: 16px;
+  outline: none;
+  background: #8042f452;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 20px;
+  color: #FFFFFF;
+  font-family: inherit;
+  margin: 0 1.5%;
   font-size: inherit;
   font-weight: 500;
   line-height: inherit;
