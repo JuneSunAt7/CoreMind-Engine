@@ -47,7 +47,6 @@ func main() {
     http.HandleFunc("/login", handlers.LoginHandler)
     http.HandleFunc("/dashboard", handlers.DashboardHandler)
 
-    // Загрузка модели
     http.HandleFunc("/upload/model", func(w http.ResponseWriter, r *http.Request) {
         if r.Method == "POST" {
             handlers.UploadModelHandler(w, r)
@@ -57,8 +56,26 @@ func main() {
             http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
         }
     })
+    http.HandleFunc("/upload/dataset", func(w http.ResponseWriter, r *http.Request) {
+        if r.Method == "POST" {
+            handlers.UploadDatasetHandler(w, r)
+        } else if r.Method == "GET" {
+            StreamProgressHandler(w, r)
+        } else {
+            http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
+        }
+    })
+    http.HandleFunc("/upload/code", func(w http.ResponseWriter, r *http.Request) {
+        if r.Method == "POST" {
+            handlers.UploadPyHandler(w, r)
+        } else if r.Method == "GET" {
+            StreamProgressHandler(w, r)
+        } else {
+            http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
+        }
+    })
 
-    http.HandleFunc("/upload/dataset", handlers.UploadDatasetHandler)
+
     http.HandleFunc("/logout", handlers.LogoutHandler)
     http.HandleFunc("/register", handlers.RegisterHandler)
 

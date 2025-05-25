@@ -23,7 +23,9 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
     cookie, _ := r.Cookie("session")
     username := cookie.Value
 
-    path := filepath.Join("uploads", "queue", username)
+     fmt.Println("Пользователь:", username)
+     
+    path := filepath.Join("uploads", "queue", "models", username)
     os.MkdirAll(path, os.ModePerm)
 
     dstPath := filepath.Join(path, handler.Filename)
@@ -58,7 +60,7 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UploadDatasetHandler(w http.ResponseWriter, r *http.Request) {
-    r.ParseMultipartForm(10 << 20)
+    r.ParseMultipartForm(10 << 20) // 10 MB
     file, handler, err := r.FormFile("dataset")
     if err != nil {
         http.Error(w, "Ошибка получения файла", http.StatusInternalServerError)
@@ -66,9 +68,88 @@ func UploadDatasetHandler(w http.ResponseWriter, r *http.Request) {
     }
     defer file.Close()
 
-    dst, _ := os.Create(filepath.Join("../uploads", handler.Filename))
-    defer dst.Close()
-    io.Copy(dst, file)
+    cookie, _ := r.Cookie("session")
+    username := cookie.Value
 
+     fmt.Println("Пользователь:", username)
+     
+    path := filepath.Join("uploads", "queue", username, "datasets")
+    os.MkdirAll(path, os.ModePerm)
+
+    dstPath := filepath.Join(path, handler.Filename)
+    dst, err := os.Create(dstPath)
+    if err != nil {
+        http.Error(w, "Ошибка создания файла", http.StatusInternalServerError)
+        return
+    }
+    defer dst.Close()
+
+    var total int64
+    buf := make([]byte, 32*1024)
+
+    for {
+        n, er := file.Read(buf)
+        if n > 0 {
+            written, _ := dst.Write(buf[:n])
+            total += int64(written)
+            percent := int((total * 100) / handler.Size)
+            ProgressChan <- percent
+        }
+        if er == io.EOF {
+            break
+        } else if er != nil {
+            http.Error(w, "Ошибка чтения файла", http.StatusInternalServerError)
+            return
+        }
+    }
+
+    ProgressChan <- 100 
     fmt.Fprintf(w, "Датасет %s успешно загружен!", handler.Filename)
+}
+func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
+    r.ParseMultipartForm(10 << 20) // 10 MB
+    file, handler, err := r.FormFile("code")
+    if err != nil {
+        http.Error(w, "Ошибка получения файла", http.StatusInternalServerError)
+        return
+    }
+    defer file.Close()
+
+    cookie, _ := r.Cookie("session")
+    username := cookie.Value
+
+     fmt.Println("Пользователь:", username)
+     
+    path := filepath.Join("uploads", "queue", username, "py")
+    os.MkdirAll(path, os.ModePerm)
+
+    dstPath := filepath.Join(path, handler.Filename)
+    dst, err := os.Create(dstPath)
+    if err != nil {
+        http.Error(w, "Ошибка создания файла", http.StatusInternalServerError)
+        return
+    }
+    defer dst.Close()
+
+    var total int64
+    buf := make([]byte, 32*1024)
+
+    for {
+        n, er := file.Read(buf)
+        if n > 0 {
+            written, _ := dst.Write(buf[:n])
+            total += int64(written)
+            percent := int((total * 100) / handler.Size)
+            ProgressChan <- percent
+        }
+        if er == io.EOF {
+            break
+        } else if er != nil {
+            http.Error(w, "Ошибка чтения файла", http.StatusInternalServerError)
+            return
+        }
+    }
+
+    ProgressChan <- 100 
+    fmt.Fprintf(w, "Python-file %s успешно загружен!", handler.Filename)
 }

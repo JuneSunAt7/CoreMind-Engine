@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
               }, 500);
           }
       }
+
   });
 
   eventSource.onerror = function(err) {
