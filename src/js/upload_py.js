@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
     codeInput.addEventListener('change', function () {
         if (!this.files[0]) return;
-  
+        
         const formData = new FormData();
         formData.append('code', this.files[0]);
   

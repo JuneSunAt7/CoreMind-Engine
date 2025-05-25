@@ -7,7 +7,7 @@ const datasetInput = document.getElementById('dataset');
             console.log("Файл не выбран");
             return;
         } 
-  
+
         const formData = new FormData();
         formData.append('dataset', this.files[0]);
         

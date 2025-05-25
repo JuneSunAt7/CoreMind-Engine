@@ -77,6 +77,7 @@ func main() {
 
 
     http.HandleFunc("/logout", handlers.LogoutHandler)
+    http.HandleFunc("/params", handlers.ParamsHandler)
     http.HandleFunc("/register", handlers.RegisterHandler)
 
     fmt.Println("Сервер запущен на http://localhost:8080")
