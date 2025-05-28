@@ -25,7 +25,7 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
 
      fmt.Println("Пользователь:", username)
      
-    path := filepath.Join("uploads", "queue", "models", username)
+    path := filepath.Join("uploads", "queue", username, "models")
     os.MkdirAll(path, os.ModePerm)
 
     dstPath := filepath.Join(path, handler.Filename)
@@ -120,7 +120,7 @@ func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
 
      fmt.Println("Пользователь:", username)
      
-    path := filepath.Join("uploads", "queue", username, "py")
+    path := filepath.Join("uploads", "queue", username, "code")
     os.MkdirAll(path, os.ModePerm)
 
     dstPath := filepath.Join(path, handler.Filename)
@@ -151,5 +151,5 @@ func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     ProgressChan <- 100 
-    fmt.Fprintf(w, "Python-file %s успешно загружен!", handler.Filename)
+    fmt.Fprintf(w, "Код %s успешно загружен!", handler.Filename)
 }

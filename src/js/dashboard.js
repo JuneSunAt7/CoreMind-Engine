@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     modelInput.addEventListener('change', function () {
         if (!this.files[0]) return;
 
-//bjnkrth
-//uhijkjjk
         const formData = new FormData();
         formData.append('model', this.files[0]);
 
