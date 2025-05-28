@@ -12,6 +12,8 @@
   <script src="https://code.jquery.com/jquery-2.1.3.min.js "></script>
 
   <script src="/js/dashboard.js" defer></script>
+  <script src="/js/upload_dataset.js" defer></script>
+  <script src="/js/upload_py.js" defer></script>
 </head>
 <body>
 
@@ -26,8 +28,7 @@
     <button id="uploadCodeBtn">Загрузить Python-модель</button>
     <input type="file" id="code" name="code" style="display: none;" />
 
-    <button id="uploadParamsBtn">Параметры обучения</button>
-    <input type="file" id="params" name="params" style="display: none;" />
+    <a href="/params"><button class="params-btn" type="button">Параметры обучения</button></a>
   </div>
   <div class="top-bar-right">
     <a href="/logout"><button class="logout-btn" type="button">Выйти</button></a>
@@ -40,7 +41,6 @@
     <h2>Текущие загрузки</h2>
     <div class="progress-container">
       <div class="progress-item">
-        <p id="currentFile">Модель: <strong>"example_model.pt"</strong></p>
         <div class="progress-bar">
           <div class="progress-fill" id="globalProgressFill" style="width: 0%"></div>
         </div>
