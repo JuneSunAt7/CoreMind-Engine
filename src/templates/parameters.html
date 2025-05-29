@@ -1,15 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Параметры</title>
+  <meta charset="UTF-8" />
+  <title>Параметры обучения</title>
 
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto :100,300,400,500,700,900|Material+Icons'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
 
-  <link rel="stylesheet" href="/static/style.css?v=2">
+  <link rel="stylesheet" href="/static/style.css?v=2" />
 
 </head>
 <body>
+  <div class="form">
+    <div class="form-header">
+      <h1>Параметры обучения модели</h1>
+    </div>
 
-    
+    <div class="form-panel one" style="padding: 40px;">
+      <form id="trainForm">
+
+<div class="form-group">
+  <label for="modelSelect">Выберите модель</label>
+  <select id="modelSelect" name="model" required>
+    <option value="" disabled selected>Загруженные модели</option>
+  </select>
+</div>
+
+        <div class="form-group">
+          <label for="dataset">Выберите датасет</label>
+          <select id="dataset" name="dataset" required>
+            <option value="" disabled selected>Выберите датасет</option>
+            <option value="mnist">MNIST</option>
+            <option value="cifar10">CIFAR-10</option>
+            <option value="custom">Свой датасет</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="epochs">Количество эпох</label>
+          <input type="number" id="epochs" name="epochs" min="1" max="100" value="10" required />
+        </div>
+
+        <div class="form-group">
+          <label for="batchSize">Размер батча</label>
+          <input type="number" id="batchSize" name="batchSize" min="1" max="1024" value="32" required />
+        </div>
+
+        <div class="form-group">
+          <label for="optimizer">Оптимизатор</label>
+          <select id="optimizer" name="optimizer" required>
+            <option value="adam">Adam</option>
+            <option value="sgd">SGD</option>
+            <option value="rmsprop">RMSprop</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="learningRate">Скорость обучения (learning rate)</label>
+          <input type="number" step="0.0001" min="0" max="1" id="learningRate" name="learningRate" value="0.001" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-remember">
+            <input type="checkbox" id="useAugmentation" name="useAugmentation" />
+            Использовать аугментацию данных
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-remember">
+            <input type="checkbox" id="shuffleData" name="shuffleData" checked />
+            Перемешивать данные
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button type="submit">Запустить обучение</button>
+          <button type="reset">Сбросить</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 </body>
+</html>

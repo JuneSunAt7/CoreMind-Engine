@@ -75,7 +75,7 @@ func main() {
         }
     })
 
-
+    http.HandleFunc("/api/models", handlers.GetModelsHandler)
     http.HandleFunc("/logout", handlers.LogoutHandler)
     http.HandleFunc("/params", handlers.ParamsHandler)
     http.HandleFunc("/register", handlers.RegisterHandler)
