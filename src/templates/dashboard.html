@@ -14,6 +14,8 @@
   <script src="/js/dashboard.js" defer></script>
   <script src="/js/upload_dataset.js" defer></script>
   <script src="/js/upload_py.js" defer></script>
+  <script src="/js/training.js" defer></script>
+  <script src="/js/run_learn.js" defer></script>
 </head>
 <body>
 
@@ -48,6 +50,13 @@
       </div>
     </div>
   </section>
+<div class="form-group">
+  <label>Прогресс обучения</label>
+  <div style="width: 100%; background: #ccc; height: 20px; border-radius: 10px; overflow: hidden;">
+    <div id="trainingProgress" style="width: 0%; height: 100%; background: #8042f4; transition: width 0.3s;"></div>
+  </div>
+  <div id="trainingProgressPercent" style="text-align: right; margin-top: 5px;">0%</div>
+</div>
 
   <section class="charts-section">
     <h2>Результаты обучения</h2>

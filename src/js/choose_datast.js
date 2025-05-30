@@ -1,33 +1,37 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const datasetSelect = document.getElementById('datasetSelect');
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const modelSelect = document.getElementById('dataset');
-
-    fetch('/api/dataset')
-      .then(response => response.json())
-      .then(models => {
-        if (models.length === 0) {
-          const option = document.createElement('option');
-          option.value = '';
-          option.text = 'Нет загруженных датасетовй';
-          option.disabled = true;
-          option.selected = true;
-          modelSelect.appendChild(option);
-        } else {
-          models.forEach(model => {
+    fetch('/api/datasets') 
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка сети при загрузке датасетов');
+            }
+            return response.json();
+        })
+        .then(datasets => {
+            if (datasets.length === 0) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.text = 'Нет загруженных датасетов';
+                option.disabled = true;
+                option.selected = true;
+                datasetSelect.appendChild(option);
+            } else {
+                datasets.forEach(dataset => {
+                    const option = document.createElement('option');
+                    option.value = dataset;
+                    option.text = dataset;
+                    datasetSelect.appendChild(option);
+                });
+            }
+        })
+        .catch(err => {
+            console.error("Ошибка загрузки датасетов:", err);
             const option = document.createElement('option');
-            option.value = model;
-            option.text = model;
-            modelSelect.appendChild(option);
-          });
-        }
-      })
-      .catch(err => {
-        console.error("Ошибка загрузки датасетов:", err);
-        const option = document.createElement('option');
-        option.value = '';
-        option.text = 'Ошибка загрузки';
-        option.disabled = true;
-        option.selected = true;
-        modelSelect.appendChild(option);
-      });
-  });
+            option.value = '';
+            option.text = 'Ошибка загрузки';
+            option.disabled = true;
+            option.selected = true;
+            datasetSelect.appendChild(option);
+        });
+});

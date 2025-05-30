@@ -6,10 +6,10 @@ import (
     "net/http"
     "os"
     "path/filepath"
-
 )
 
-var ProgressChan chan int
+// Эти каналы теперь разделены
+var UploadProgressChan chan int
 
 func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
     r.ParseMultipartForm(10 << 20) // 10 MB
@@ -23,8 +23,8 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
     cookie, _ := r.Cookie("session")
     username := cookie.Value
 
-     fmt.Println("Пользователь:", username)
-     
+    fmt.Println("Пользователь:", username)
+
     path := filepath.Join("uploads", "queue", username, "models")
     os.MkdirAll(path, os.ModePerm)
 
@@ -45,7 +45,7 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
             written, _ := dst.Write(buf[:n])
             total += int64(written)
             percent := int((total * 100) / handler.Size)
-            ProgressChan <- percent
+            UploadProgressChan <- percent
         }
         if er == io.EOF {
             break
@@ -55,7 +55,7 @@ func UploadModelHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 
-    ProgressChan <- 100 
+    UploadProgressChan <- 100
     fmt.Fprintf(w, "Модель %s успешно загружена!", handler.Filename)
 }
 
@@ -71,8 +71,8 @@ func UploadDatasetHandler(w http.ResponseWriter, r *http.Request) {
     cookie, _ := r.Cookie("session")
     username := cookie.Value
 
-     fmt.Println("Пользователь:", username)
-     
+    fmt.Println("Пользователь:", username)
+
     path := filepath.Join("uploads", "queue", username, "datasets")
     os.MkdirAll(path, os.ModePerm)
 
@@ -93,7 +93,7 @@ func UploadDatasetHandler(w http.ResponseWriter, r *http.Request) {
             written, _ := dst.Write(buf[:n])
             total += int64(written)
             percent := int((total * 100) / handler.Size)
-            ProgressChan <- percent
+            UploadProgressChan <- percent
         }
         if er == io.EOF {
             break
@@ -103,9 +103,10 @@ func UploadDatasetHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 
-    ProgressChan <- 100 
+    UploadProgressChan <- 100
     fmt.Fprintf(w, "Датасет %s успешно загружен!", handler.Filename)
 }
+
 func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
     r.ParseMultipartForm(10 << 20) // 10 MB
     file, handler, err := r.FormFile("code")
@@ -118,8 +119,8 @@ func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
     cookie, _ := r.Cookie("session")
     username := cookie.Value
 
-     fmt.Println("Пользователь:", username)
-     
+    fmt.Println("Пользователь:", username)
+
     path := filepath.Join("uploads", "queue", username, "code")
     os.MkdirAll(path, os.ModePerm)
 
@@ -140,7 +141,7 @@ func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
             written, _ := dst.Write(buf[:n])
             total += int64(written)
             percent := int((total * 100) / handler.Size)
-            ProgressChan <- percent
+            UploadProgressChan <- percent
         }
         if er == io.EOF {
             break
@@ -150,6 +151,6 @@ func UploadPyHandler(w http.ResponseWriter, r *http.Request) {
         }
     }
 
-    ProgressChan <- 100 
+    UploadProgressChan <- 100
     fmt.Fprintf(w, "Код %s успешно загружен!", handler.Filename)
 }

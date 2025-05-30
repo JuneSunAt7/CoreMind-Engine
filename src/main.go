@@ -7,29 +7,44 @@ import (
     "coremind/handlers"
 )
 
-var ProgressChan = make(chan int)
+var UploadProgressChan = make(chan int)
+var TrainingProgressChan = make(chan int)
 
 func init() {
-    handlers.ProgressChan = ProgressChan // link ti chanel
+    handlers.UploadProgressChan = UploadProgressChan
+    handlers.TrainingProgressChan = TrainingProgressChan
 }
 
-func StreamProgressHandler(w http.ResponseWriter, r *http.Request) {
+func StreamUploadProgressHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "text/event-stream")
     w.Header().Set("Cache-Control", "no-cache")
 
     clientChan := make(chan int)
-    defer func() {
-        fmt.Println("Клиент отключился")
-    }()
-
     go func() {
-        for percent := range clientChan {
-            fmt.Fprintf(w, "data: %d\n\n", percent)
+        for p := range clientChan {
+            fmt.Fprintf(w, "data: %d\n\n", p)
             w.(http.Flusher).Flush()
         }
     }()
 
-    for p := range ProgressChan {
+    for p := range UploadProgressChan {
+        clientChan <- p
+    }
+}
+
+func StreamTrainingProgressHandler(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "text/event-stream")
+    w.Header().Set("Cache-Control", "no-cache")
+
+    clientChan := make(chan int)
+    go func() {
+        for p := range clientChan {
+            fmt.Fprintf(w, "data: %d\n\n", p)
+            w.(http.Flusher).Flush()
+        }
+    }()
+
+    for p := range TrainingProgressChan {
         clientChan <- p
     }
 }
@@ -51,29 +66,36 @@ func main() {
         if r.Method == "POST" {
             handlers.UploadModelHandler(w, r)
         } else if r.Method == "GET" {
-            StreamProgressHandler(w, r)
+            StreamUploadProgressHandler(w, r)
         } else {
             http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
         }
     })
+
     http.HandleFunc("/upload/dataset", func(w http.ResponseWriter, r *http.Request) {
         if r.Method == "POST" {
             handlers.UploadDatasetHandler(w, r)
         } else if r.Method == "GET" {
-            StreamProgressHandler(w, r)
+            StreamUploadProgressHandler(w, r)
         } else {
             http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
         }
     })
+
     http.HandleFunc("/upload/code", func(w http.ResponseWriter, r *http.Request) {
         if r.Method == "POST" {
             handlers.UploadPyHandler(w, r)
         } else if r.Method == "GET" {
-            StreamProgressHandler(w, r)
+            StreamUploadProgressHandler(w, r)
         } else {
             http.Error(w, "Метод не поддерживается", http.StatusMethodNotAllowed)
         }
     })
+
+    http.HandleFunc("/start-training", handlers.StartTrainingHandler)
+    http.HandleFunc("/stream/upload", StreamUploadProgressHandler)
+    http.HandleFunc("/stream/train", StreamTrainingProgressHandler)
+    http.HandleFunc("/api/training-history", handlers.GetTrainingHistoryHandler)
 
     http.HandleFunc("/api/models", handlers.GetModelsHandler)
     http.HandleFunc("/api/datasets", handlers.GetDatasetsHandler)

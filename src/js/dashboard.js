@@ -1,47 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
     const modelInput = document.getElementById('model');
+    const datasetInput = document.getElementById('dataset');
+    const codeInput = document.getElementById('code');
+
     document.getElementById('uploadModelBtn').addEventListener('click', () => modelInput.click());
+    document.getElementById('uploadDatasetBtn').addEventListener('click', () => datasetInput.click());
+    document.getElementById('uploadCodeBtn').addEventListener('click', () => codeInput.click());
 
-    modelInput.addEventListener('change', function () {
-        if (!this.files[0]) return;
+    function setupUploadHandler(inputElement, endpoint) {
+        inputElement.addEventListener('change', function () {
+            if (!this.files[0]) return;
 
-        const formData = new FormData();
-        formData.append('model', this.files[0]);
+            const formData = new FormData();
+            formData.append(inputElement.name, this.files[0]);
 
-        fetch('/upload/model', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(res => res.text())
-        .then(data => {
-            console.log("Файл загружен:", data);
-        })
-        .catch(err => console.error("Ошибка:", err));
-    });
+            fetch('/upload/' + endpoint, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(res => res.text())
+            .then(data => {
+                console.log("Файл загружен:", data);
+            })
+            .catch(err => console.error("Ошибка загрузки:", err));
+        });
+    }
 
-    const eventSource = new EventSource('/upload/model');
-
-    eventSource.addEventListener('message', function(e) {
-        const percent = parseInt(e.data);
-        const progressBar = document.getElementById('globalProgressFill');
-        const progressText = document.getElementById('progressPercent');
-
-        if (!isNaN(percent) && progressBar && progressText) {
-            progressBar.style.width = percent + '%';
-            progressText.textContent = percent + '%';
-
-            if (percent === 100) {
-                setTimeout(() => {
-                    alert('Загрузка завершена!');
-                    progressBar.style.width = '0%';
-                    progressText.textContent = '0%';
-                    currentFileElement.innerHTML = 'Модель: <strong>"example_model.pt"</strong>'; // Сбрасываем текст
-                }, 500);
-            }
-        }
-    });
-
-    eventSource.onerror = function(err) {
-        console.error("SSE ошибка:", err);
-    };
+    setupUploadHandler(modelInput, 'model');
+    setupUploadHandler(datasetInput, 'dataset');
+    setupUploadHandler(codeInput, 'code');
 });

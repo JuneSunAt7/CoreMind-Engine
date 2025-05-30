@@ -16,4 +16,5 @@ func InitDB() {
     }
 
     DB.AutoMigrate(&models.User{})
+    DB.AutoMigrate(&models.TrainingResult{})
 }

@@ -7,6 +7,8 @@
   
   <link rel="stylesheet" href="/static/style.css?v=2" />
   <script src="/js/params.js" defer></script>
+  <script src="/js/run_learn.js" defer></script>
+  <script src="/js/choose_datast.js" defer></script>
 </head>
 <body>
   <div class="form">
@@ -16,16 +18,14 @@
 
     <div class="form-panel one" style="padding: 40px;">
       <form id="trainForm">
-
-<div class="form-group">
-  <label for="modelSelect">Выберите модель</label>
-  <select id="modelSelect" name="model" required>
-  </select>
-</div>
-
         <div class="form-group">
-          <label for="dataset">Выберите датасет</label>
-          <select id="dataset" name="dataset" required>
+          <label for="modelSelect">Выберите модель</label>
+          <select id="modelSelect" name="model" required>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="datasetSelect">Выберите датасет</label>
+          <select id="datasetSelect" name="dataset" required>
           </select>
         </div>
 

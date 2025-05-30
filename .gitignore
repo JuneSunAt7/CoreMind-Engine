@@ -14,3 +14,5 @@ src/uploads/queue/admin123/models/ai_learn.py
 src/uploads/queue/admin123/models/error_classifier_model.h5
 src/uploads/queue/models/admin123/ai_learn.py
 src/uploads/queue/models/admin123/label_encoder.pickle
+src/uploads/queue/admin123/datasets/requirements.txt
+src/db/database.go
