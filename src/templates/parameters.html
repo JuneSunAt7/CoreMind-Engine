@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Параметры обучения</title>
-
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
-
+  
   <link rel="stylesheet" href="/static/style.css?v=2" />
-
+  <script src="/js/params.js" defer></script>
 </head>
 <body>
   <div class="form">
@@ -21,17 +20,12 @@
 <div class="form-group">
   <label for="modelSelect">Выберите модель</label>
   <select id="modelSelect" name="model" required>
-    <option value="" disabled selected>Загруженные модели</option>
   </select>
 </div>
 
         <div class="form-group">
           <label for="dataset">Выберите датасет</label>
           <select id="dataset" name="dataset" required>
-            <option value="" disabled selected>Выберите датасет</option>
-            <option value="mnist">MNIST</option>
-            <option value="cifar10">CIFAR-10</option>
-            <option value="custom">Свой датасет</option>
           </select>
         </div>
 
