@@ -95,7 +95,10 @@ func main() {
     http.HandleFunc("/start-training", handlers.StartTrainingHandler)
     http.HandleFunc("/stream/upload", StreamUploadProgressHandler)
     http.HandleFunc("/stream/train", StreamTrainingProgressHandler)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 316d7cc71102c57031089a009fdafe60859355c8
     http.HandleFunc("/api/models", handlers.GetModelsHandler)
     http.HandleFunc("/api/datasets", handlers.GetDatasetsHandler)
     http.HandleFunc("/logout", handlers.LogoutHandler)
