@@ -19,9 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 progressBar.style.width = percent + '%';
                 progressText.textContent = percent + '%';
 
-                if (percent === 100) {
+                if (percent === 95) {
                     setTimeout(() => {
-                        alert('Обучение завершено!');
                         progressBar.style.width = '0%';
                         progressText.textContent = '0%';
                         localStorage.removeItem('trainingStarted'); // Сбрасываем флаг

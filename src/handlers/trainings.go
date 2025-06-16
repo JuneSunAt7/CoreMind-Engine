@@ -63,7 +63,7 @@ func StartTrainingHandler(w http.ResponseWriter, r *http.Request) {
             time.Sleep(300 * time.Millisecond)
         }
 
-        cmd := exec.Command("python", "train.py",
+        cmd := exec.Command("python", "python/train.py",
             "--model", modelPath,
             "--dataset", datasetPath,
             "--epochs", fmt.Sprintf("%d", params.Epochs),

@@ -8,7 +8,6 @@ def train(model_path, dataset_path, epochs, batch_size, optimizer, learning_rate
     print(f"Обучение начато...")
     print(f"Параметры: {epochs} эпох, batch={batch_size}, оптимизатор={optimizer}, lr={learning_rate}")
 
-    # Эмуляция обучения
     for epoch in range(epochs):
         loss = round(random.uniform(0.1, 2.0), 4)
         accuracy = round(random.uniform(0.5, 0.99), 4)

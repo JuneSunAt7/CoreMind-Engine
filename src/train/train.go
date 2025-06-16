@@ -14,7 +14,6 @@ var db *gorm.DB
 func ProcessTrainingResult(outputJSON string, username string, params models.TrainingParams) {
     var result map[string]interface{}
 
-    // Используем обычное присваивание =
     var err = json.Unmarshal([]byte(outputJSON), &result)
     
     if err != nil {
