@@ -95,8 +95,6 @@ func main() {
     http.HandleFunc("/start-training", handlers.StartTrainingHandler)
     http.HandleFunc("/stream/upload", StreamUploadProgressHandler)
     http.HandleFunc("/stream/train", StreamTrainingProgressHandler)
-    http.HandleFunc("/api/training-history", handlers.GetTrainingHistoryHandler)
-
     http.HandleFunc("/api/models", handlers.GetModelsHandler)
     http.HandleFunc("/api/datasets", handlers.GetDatasetsHandler)
     http.HandleFunc("/logout", handlers.LogoutHandler)
